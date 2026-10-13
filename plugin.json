@@ -3,5 +3,7 @@
   "name": "shekang-academic-writing",
   "version": "3.0.0",
   "description": "中英文学术写作、样本文风学习与防御性表达检查；保留科学证据并执行交付门控。Evidence-preserving academic writing for ChatGPT and Codex.",
-  "author": { "name": "She Kang" }
+  "author": {
+    "name": "She Kang"
+  }
 }
