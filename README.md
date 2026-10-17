@@ -4,14 +4,16 @@
 
 面向中英文学术论文的写作、润色与文风改造。通过具体陈述、自然论证和逐项内容核对，减少模板化表达、情绪性自我削弱及段尾机械防御，同时保持科学含义。
 
-版本：3.0.0。支持ChatGPT与Codex共用同一套规则和离线Python门控。
+版本：4.1.0（2026-10-17）。支持ChatGPT与Codex共用同一套规则和离线Python门控。
+
+本版保留 v3 的证据保持、全文样本学习和交付门控，吸收用户提供 v4 的结构优先方法。全文修订先诊断问题与材料，再调整框架、段落，核对论据，最后处理语言和格式；证据约束贯穿全过程。纯语言润色与忠实翻译按原定范围执行。
 
 ## 主要功能
 
 - 学术润色：优化措辞、语法、指代和衔接，保留事实、数字、引用、统计判断和结论力度。
 - 文风学习：完整阅读主稿与目标期刊主编、副主编或作者既往文章，提炼有位置依据的风格特征，再原创迁移到当前稿件。
 - 防御性写作检查：减少预设反对、无信息增量的自我削弱和段尾套话；必要限定与对应主张自然整合。
-- 全文修订：区分语言润色与实质修改，支持框架整理、批注落实和多稿整合。
+- 全文修订：先诊断全文，再处理框架、段落与论据，最后润色和校对；区分语言润色、组织调整与内容修订，支持批注落实和多稿整合。
 - 交付门控：检查脚本、审查记录和最终正文绑定，未完成审查或正文已改变时阻止记录通过。
 
 负面结果、不良事件、失败、未知事项和必要不确定性完整保留。may、might、suggest、“可能”“提示”及统计否定不作为禁词。参考文章用于学习表达，不提供新稿的数据或论点。
@@ -45,12 +47,27 @@ $shekang-academic-writing
 
 希望每次写作都执行共同检查时，将[全局写作前置模板](templates/AGENTS.writing-gate.md)追加到自己的Codex全局指令，保留已有内容。详细步骤见[Codex指南](docs/codex.md)。
 
+全文修改时，可使用“先框架后全文”提示词：
+
+```text
+$shekang-academic-writing
+请按全文修订模式处理我提供的最新稿，先读取技能、门控与 references/structure-first-revision.md。
+完整阅读全文，诊断文章类型、中心问题、现有证据能够回答什么，以及各节功能。
+先调整全文框架，再处理段落、核对主张与论据，最后修改语言和格式。
+可以依据现有材料重排章节和段落；简述主要框架调整后，继续完成修改后的全文。
+保留全部科学信息、主要结局、比较口径、数字、引文范围、负面结果、必要不确定性和结论力度。
+缺失的事实、证据与未确认解释在正文外定位说明；不编造机制或研究结果。
+对最终正文完成 prepare → 逐项语义审查 → check，只在最终文本对应报告为 PASS 时交付。
+```
+
+具体方法见[全文结构修订](skills/shekang-academic-writing/references/structure-first-revision.md)。仅要求润色或忠实翻译时，保留该任务范围，发现结构问题可在正文外说明。
+
 ## 在ChatGPT使用
 
 发行包有两种形式：
 
-- [插件ZIP](dist/2026-10-13_shekang-academic-writing-v3.0.0-plugin.zip)：根目录含 `plugin.json` 和 `skills/`，供支持便携插件导入的宿主使用。
-- [单技能ZIP](dist/2026-10-13_shekang-academic-writing-v3.0.0-skill.zip)：独立、自包含的技能目录，供文件上传、技能工具或手动安装使用。
+- [插件ZIP](dist/2026-10-17_shekang-academic-writing-v4.1.0-plugin.zip)：根目录含 `plugin.json` 和 `skills/`，供支持便携插件导入的宿主使用。
+- [单技能ZIP](dist/2026-10-17_shekang-academic-writing-v4.1.0-skill.zip)：独立、自包含的技能目录，供文件上传、技能工具或手动安装使用。
 
 在具备Python执行能力的ChatGPT会话中上传包与稿件后，可以直接使用以下提示词：
 
@@ -78,7 +95,7 @@ Python脚本仅依赖标准库，离线运行，无需API密钥。
 ```text
 python -B -m unittest discover -s skills/shekang-academic-writing/scripts -p "test_*.py"
 python -B -m unittest discover -s scripts -p "test_*.py"
-python scripts/build_release.py --date 2026-10-13
+python scripts/build_release.py --date 2026-10-17
 ```
 
 构建器使用公开文件白名单。真实稿件、私人风格档案、批注和门控运行记录不进入发行包；运行记录应存放在自己的私人工作目录。

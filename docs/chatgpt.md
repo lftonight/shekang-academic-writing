@@ -1,6 +1,6 @@
 # 在 ChatGPT 中使用
 
-版本：3.0.0。本文介绍独立技能、插件和会话附件三种使用方式。实际入口取决于账户、工作区权限、产品界面和执行环境。
+版本：4.1.0（2026-10-17）。本文介绍独立技能、插件和会话附件三种使用方式。实际入口取决于账户、工作区权限、产品界面和执行环境。
 
 ## 选择适合自己的入口
 
@@ -35,10 +35,25 @@ OpenAI 当前说明，ChatGPT 工作区 Skills 面向符合条件的 Business、
 
 ## 可复制的使用提示词
 
+全文修订采用“全文诊断→框架→段落→论据核对→语言→格式”的顺序，证据约束贯穿各步。纯润色与忠实翻译按用户原定范围执行，结构问题可在正文外定位。
+
+已安装技能时先通过 `@` 选择本技能；使用附件时先提供可访问的技能包。需要先调整框架再完成全文，可发送：
+
+```text
+请按 shekang-academic-writing 4.1.0 的全文修订模式处理最新稿。
+先读取 SKILL.md、references/anti-defensive-gate.md 和 references/structure-first-revision.md，再阅读全文。
+先诊断文章类型、中心问题、现有证据能回答什么及各节功能，再调整框架和段落、核对论据，最后处理语言与格式。
+可以依据现有材料重排章节和段落；简述主要框架调整后继续完成修改全文。
+保留全部科学信息、主要结局、比较、数字、引文范围、负面结果、必要不确定性与结论力度。
+缺失证据与未确认解释在正文外定位，不补造机制、数据或结果。
+若具备 Python 且能访问脚本，完成最终正文的 prepare → 逐项语义审查 → check，只在对应报告为 PASS 时交付。
+无法执行时说明具体缺口，完成可进行的阅读和审查准备，不声称通过门控。
+```
+
 已安装技能时，先通过 `@` 选择本技能，再发送：
 
 ```text
-请按 shekang-academic-writing 3.0.0 润色我提供的稿件，只修改语言表达。
+请按 shekang-academic-writing 4.1.0 润色我提供的稿件，只修改语言表达。
 先读取主技能和 references/anti-defensive-gate.md。
 保留所有信息、数字、负面结果、引文支持范围和结论力度，不增补机制或作者判断。
 删去无信息增量的自我削弱、预设反对及机械段尾，保留有科学含义的限定。
@@ -49,7 +64,7 @@ OpenAI 当前说明，ChatGPT 工作区 Skills 面向符合条件的 Business、
 使用附件时发送：
 
 ```text
-附件是 shekang-academic-writing 3.0.0 技能包和本次稿件。
+附件是 shekang-academic-writing 4.1.0 技能包和本次稿件。
 请先查看附件结构，读取其中的 SKILL.md 与 references/anti-defensive-gate.md。
 若具备 Python，请在当前可访问目录解压包，定位技能内 scripts/writing_gate.py，并按 prepare → 语义审查 → check 完成同一门控。
 本次只做语言润色，保留全部科学含义、统计判断、数字、引文范围和必要不确定性。
@@ -81,5 +96,6 @@ OpenAI 当前说明，ChatGPT 工作区 Skills 面向符合条件的 Business、
 - [Codex 使用说明](codex.md)
 - [主技能](../skills/shekang-academic-writing/SKILL.md)
 - [门控指南](../skills/shekang-academic-writing/references/anti-defensive-gate.md)
+- [全文结构修订](../skills/shekang-academic-writing/references/structure-first-revision.md)
 
 平台说明核实日期：2026-10-13。具体账户的界面与权限需在使用时确认。

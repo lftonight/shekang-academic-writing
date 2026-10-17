@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "shekang-academic-writing",
-  "version": "3.0.0",
-  "description": "中英文学术写作、样本文风学习与防御性表达检查；保留科学证据并执行交付门控。Evidence-preserving academic writing for ChatGPT and Codex.",
+  "version": "4.1.0",
+  "description": "中英文学术写作、结构优先修订、样本文风学习与防御性表达检查；保留科学证据并执行交付门控。Evidence-preserving academic writing and structure-first revision for ChatGPT and Codex.",
   "author": {
     "name": "She Kang"
   }

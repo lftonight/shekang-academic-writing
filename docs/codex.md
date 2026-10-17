@@ -1,6 +1,6 @@
 # 在 Codex 中使用
 
-版本：3.0.0。本技能适用于中英文学术起草、语言润色、样本文风学习及共同表达检查。它保留科学内容与证据力度，并在交付前执行离线 Python 门控。
+版本：4.1.0（2026-10-17）。本技能适用于中英文学术起草、全文修订、语言润色、样本文风学习及共同表达检查。它保留科学内容与证据力度，并在交付前执行离线 Python 门控。
 
 ## 安装独立技能
 
@@ -19,6 +19,20 @@ Codex 官方也支持从用户、项目、管理员和系统位置发现本地�
 ## 调用技能
 
 在支持的 Codex 界面输入 `$` 选择 `shekang-academic-writing`；CLI 或 IDE 扩展也可通过 `/skills` 查看技能。技能修改通常会自动发现，未显示时启动新会话或重启宿主。[技能调用与发现](https://learn.chatgpt.com/docs/build-skills)
+
+全文修订先诊断文章类型、中心问题、证据能力与节功能，再调整框架和段落、核对主张与论据，最后处理语言和格式。证据约束从诊断开始持续参与。仅做语言润色或忠实翻译时，保留原定范围；结构问题在正文外定位。
+
+可复制的“先框架后全文”提示词：
+
+```text
+$shekang-academic-writing
+请完整阅读最新稿，按全文修订模式先诊断文章类型、中心问题、材料能回答什么及各节功能。
+读取 references/structure-first-revision.md，先调整框架，再处理段落、核对论据，最后修改语言与格式。
+在现有材料内重排章节和段落，简述主要框架调整后继续完成修改全文。
+保留全部科学信息、主要结局、比较、数字、引文范围、负面结果、必要限定和结论力度。
+缺失证据或未确认解释在正文外定位，不补造机制、数据或结果。
+完成最终正文的 prepare → 逐项语义审查 → check，只在对应报告为 PASS 时交付。
+```
 
 可复制的语言润色提示词：
 
@@ -76,18 +90,18 @@ Codex home 默认是当前用户的 `.codex`，也可由 `CODEX_HOME` 指定。�
 
 ## 使用便携插件与生成发行包
 
-仓库根 [plugin.json](../plugin.json) 使用便携 Agent Plugins 格式，版本为 3.0.0；技能从根目录 `skills/` 自动发现，因此不声明 `skills` 字段。插件安装与独立技能安装是不同路线，按宿主提供的插件目录或本地 marketplace 流程操作。[便携插件格式](https://developers.openai.com/plugins/build/plugins)
+仓库根 [plugin.json](../plugin.json) 使用便携 Agent Plugins 格式，版本为 4.1.0；技能从根目录 `skills/` 自动发现，因此不声明 `skills` 字段。插件安装与独立技能安装是不同路线，按宿主提供的插件目录或本地 marketplace 流程操作。[便携插件格式](https://developers.openai.com/plugins/build/plugins)
 
 从仓库根目录生成带日期的插件 ZIP 和单技能 ZIP：
 
 ```shell
-python -X utf8 scripts/build_release.py --date 2026-10-13
+python -X utf8 scripts/build_release.py --date 2026-10-17
 ```
 
 发行文件输出到 `dist/`：
 
-- `2026-10-13_shekang-academic-writing-v3.0.0-plugin.zip`
-- `2026-10-13_shekang-academic-writing-v3.0.0-skill.zip`
+- `2026-10-17_shekang-academic-writing-v4.1.0-plugin.zip`
+- `2026-10-17_shekang-academic-writing-v4.1.0-skill.zip`
 
 插件 ZIP 包含根清单和 `skills/`；单技能 ZIP 包含自包含技能目录。打包脚本见 [build_release.py](../scripts/build_release.py)。生成 ZIP 和公开 GitHub 仓库均不代表完成官方插件目录上架。
 
@@ -97,5 +111,6 @@ python -X utf8 scripts/build_release.py --date 2026-10-13
 - [ChatGPT 使用说明](chatgpt.md)
 - [主技能](../skills/shekang-academic-writing/SKILL.md)
 - [门控指南](../skills/shekang-academic-writing/references/anti-defensive-gate.md)
+- [全文结构修订](../skills/shekang-academic-writing/references/structure-first-revision.md)
 
 平台说明核实日期：2026-10-13。

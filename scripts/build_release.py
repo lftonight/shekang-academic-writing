@@ -14,7 +14,7 @@ import tempfile
 import zipfile
 
 SKILL_NAME = "shekang-academic-writing"
-VERSION = "3.0.0"
+VERSION = "4.1.0"
 PUBLIC_SKILL_FILES = (
     "SKILL.md",
     "LICENSE",
@@ -22,6 +22,7 @@ PUBLIC_SKILL_FILES = (
     "references/evidence-preserving-polish.md",
     "references/sample-style-transfer.md",
     "references/revision-playbook.md",
+    "references/structure-first-revision.md",
     "references/revision-examples.md",
     "references/style-profile-template.md",
     "scripts/writing_gate.py",

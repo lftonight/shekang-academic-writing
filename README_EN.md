@@ -1,8 +1,10 @@
 # Shekang Academic Writing
 
-Version **3.0.0** · [中文说明](README.md)
+Version **4.1.0** · Released **2026-10-17** · [中文说明](README.md)
 
 A portable skill for academic drafting, language editing, translation, and learning a supplied author's writing style. It supports Chinese and English work in ChatGPT and Codex, preserves scientific meaning, and uses an offline Python review gate before delivery.
+
+This release retains the v3 evidence safeguards, complete-sample style learning, and delivery gate, and incorporates the structure-first approach from the supplied v4 package. Full-manuscript revision proceeds through diagnosis, framework, paragraphs, evidence checks, language, and formatting. Evidence constraints apply throughout; language-only editing and faithful translation retain their requested scope.
 
 ## What it does
 
@@ -10,6 +12,7 @@ A portable skill for academic drafting, language editing, translation, and learn
 - Preserves study populations, outcomes, comparisons, numbers, statistical judgments, citation scope, negative findings, and the strength of conclusions.
 - Keeps meaningful uncertainty, including “may,” “might,” and “suggest.” These are not banned words.
 - Learns reusable expression patterns from complete supplied samples without borrowing their facts, mechanisms, citations, or distinctive passages.
+- Revises a complete manuscript from its question and section functions through paragraph organization and claim–evidence checks before sentence polishing.
 - Applies shared expression checks to other writing genres while retaining their purpose and voice.
 
 Language editing does not authorize new mechanisms, interpretations, evidence, or conclusions. The skill does not promise an AI-detector score, a similarity score, or journal acceptance.
@@ -45,7 +48,23 @@ The installer targets `CODEX_HOME/skills/shekang-academic-writing/`, using the c
 
 Open a new session if needed, type `$` and select `shekang-academic-writing`. Codex CLI and the IDE extension also provide `/skills`. Verify that your host discovers the installed skill; OpenAI documents additional user and repository locations such as `.agents/skills/`. Avoid installing duplicate skills with the same name. See the [Codex guide](docs/codex.md) and [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
 
-Copyable prompt:
+Copyable prompt for revising the framework and then the full manuscript:
+
+```text
+$shekang-academic-writing
+Use full-manuscript revision mode for the latest supplied draft.
+Read SKILL.md, references/anti-defensive-gate.md, and references/structure-first-revision.md first.
+Read the complete manuscript. Diagnose its genre, central question, what the available evidence can answer, and the function of each section.
+Revise the framework first, then the paragraphs and claim–evidence alignment, then language and formatting.
+You may reorganize existing sections and paragraphs; briefly explain the main framework changes and continue through the complete revised manuscript.
+Preserve all scientific information, primary outcomes, comparisons, numbers, citation scope, negative findings, necessary uncertainty, and conclusion strength.
+Identify missing evidence or unconfirmed interpretations outside the manuscript. Add no invented mechanisms or findings.
+Complete prepare → semantic review → check for the final text, and deliver only when its matching report is PASS.
+```
+
+See the [structure-first revision guide](skills/shekang-academic-writing/references/structure-first-revision.md). For language-only work or faithful translation, retain the requested scope and identify structural concerns outside the text.
+
+Copyable prompt for language editing only:
 
 ```text
 $shekang-academic-writing
@@ -75,7 +94,7 @@ Attaching files provides material for the conversation. Cloud execution does not
 Copyable prompt after selecting the installed skill with `@`, or attaching its files:
 
 ```text
-Use shekang-academic-writing 3.0.0 to edit my manuscript for language only.
+Use shekang-academic-writing 4.1.0 to edit my manuscript for language only.
 Read the supplied SKILL.md and references/anti-defensive-gate.md before writing.
 If a ZIP is attached, inspect its structure and locate the skill directory in the current accessible environment.
 Preserve scientific meaning, numbers, negative results, statistical judgments, citation scope, and necessary uncertainty.
@@ -107,13 +126,13 @@ For Word, PDF, or slides, extract and verify the final visible text before check
 ## Build a release
 
 ```shell
-python -X utf8 scripts/build_release.py --date 2026-10-13
+python -X utf8 scripts/build_release.py --date 2026-10-17
 ```
 
 The build creates two archives in `dist/`:
 
-- `2026-10-13_shekang-academic-writing-v3.0.0-plugin.zip`
-- `2026-10-13_shekang-academic-writing-v3.0.0-skill.zip`
+- `2026-10-17_shekang-academic-writing-v4.1.0-plugin.zip`
+- `2026-10-17_shekang-academic-writing-v4.1.0-skill.zip`
 
 The plugin contains the root manifest and `skills/`; the standalone archive contains one self-contained skill directory. Keep private manuscripts, samples, profiles, and review records outside public release files.
 

@@ -45,9 +45,9 @@ class ReleaseToolsTests(unittest.TestCase):
         for name in private:
             self.write(self.source / name, "PRIVATE")
             self.write(self.repo / name, "PRIVATE")
-        plugin, skill = release.build(self.repo, "2026-10-13")
-        self.assertEqual(plugin.name, "2026-10-13_shekang-academic-writing-v3.0.0-plugin.zip")
-        self.assertEqual(skill.name, "2026-10-13_shekang-academic-writing-v3.0.0-skill.zip")
+        plugin, skill = release.build(self.repo, "2026-10-17")
+        self.assertEqual(plugin.name, f"2026-10-17_{release.SKILL_NAME}-v{release.VERSION}-plugin.zip")
+        self.assertEqual(skill.name, f"2026-10-17_{release.SKILL_NAME}-v{release.VERSION}-skill.zip")
         expected_skill = {f"{release.SKILL_NAME}/{name}" for name in release.PUBLIC_SKILL_FILES}
         with zipfile.ZipFile(skill) as archive:
             self.assertEqual(set(archive.namelist()), expected_skill)
@@ -57,11 +57,11 @@ class ReleaseToolsTests(unittest.TestCase):
             self.assertEqual(set(archive.namelist()), expected)
             self.assertIn("plugin.json", archive.namelist())
         before = (plugin.read_bytes(), skill.read_bytes())
-        release.build(self.repo, "2026-10-13")
+        release.build(self.repo, "2026-10-17")
         self.assertEqual(before, (plugin.read_bytes(), skill.read_bytes()))
 
     def test_second_zip_commit_failure_restores_both_originals(self):
-        plugin, skill = release.build(self.repo, "2026-10-13")
+        plugin, skill = release.build(self.repo, "2026-10-17")
         before = (plugin.read_bytes(), skill.read_bytes())
         self.write(self.source / "SKILL.md", "updated public skill")
         real_replace, calls = release.os.replace, 0
@@ -73,7 +73,7 @@ class ReleaseToolsTests(unittest.TestCase):
             return real_replace(source, destination)
         with patch.object(release.os, "replace", side_effect=fail_fourth):
             with self.assertRaisesRegex(OSError, "second ZIP commit failed"):
-                release.build(self.repo, "2026-10-13")
+                release.build(self.repo, "2026-10-17")
         self.assertEqual(before, (plugin.read_bytes(), skill.read_bytes()))
         self.assertFalse(list(plugin.parent.glob(".release-*")))
 
@@ -81,12 +81,12 @@ class ReleaseToolsTests(unittest.TestCase):
         missing = self.source / release.PUBLIC_SKILL_FILES[0]
         missing.unlink()
         with self.assertRaisesRegex(ValueError, "Required public file"):
-            release.build(self.repo, "2026-10-13")
+            release.build(self.repo, "2026-10-17")
         self.assertFalse((self.repo / "dist").exists())
         self.write(missing, "restored")
         self.write(self.repo / "plugin.json", '{"version":"2.0.0"}')
-        with self.assertRaisesRegex(ValueError, "version 3.0.0"):
-            release.build(self.repo, "2026-10-13")
+        with self.assertRaisesRegex(ValueError, f"version {release.VERSION}"):
+            release.build(self.repo, "2026-10-17")
 
     def test_date_validation(self):
         for value in ("20261013", "2026-02-30", "1979-01-01", "2108-01-01"):
@@ -106,7 +106,7 @@ class ReleaseToolsTests(unittest.TestCase):
         candidate.unlink()
         self.symlink(candidate, outside)
         with self.assertRaisesRegex(ValueError, "Links/reparse points"):
-            release.build(self.repo, "2026-10-13")
+            release.build(self.repo, "2026-10-17")
         with self.assertRaisesRegex(ValueError, "Links/reparse points"):
             self.install()
 
@@ -161,7 +161,7 @@ class ReleaseToolsTests(unittest.TestCase):
                 return real_lstat(path, *args, **kwargs)
             with self.subTest(mode=mode, attributes=attributes), patch.object(Path, "lstat", altered_lstat):
                 with self.assertRaisesRegex(ValueError, "Links/reparse points"):
-                    release.build(self.repo, "2026-10-13")
+                    release.build(self.repo, "2026-10-17")
                 with self.assertRaisesRegex(ValueError, "Links/reparse points"):
                     self.install()
 
